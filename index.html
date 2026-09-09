@@ -1,0 +1,216 @@
+```html
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#8aa88a" />
+  <title>Casa Boretto</title>
+
+  <style>
+    :root {
+      --bg: #f6f3ee;
+      --card: #ffffff;
+      --text: #2e2e2e;
+      --muted: #777;
+      --green: #8aa88a;
+      --green-dark: #6f8f70;
+      --green-soft: #e8f0e6;
+      --border: #ddd8d0;
+      --pink: #d7a9a3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .app {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .header {
+      margin-bottom: 16px;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-top: 4px;
+      font-size: 14px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .big {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .timer {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-top: 6px;
+    }
+
+    .progress-wrap {
+      margin-top: 14px;
+    }
+
+    .progress-line {
+      height: 12px;
+      background: #ece9e4;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--green);
+      transition: width 0.2s ease;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: var(--green);
+      color: white;
+      font-weight: 700;
+    }
+
+    .primary:active {
+      background: var(--green-dark);
+    }
+
+    .secondary {
+      background: #efede9;
+      color: var(--text);
+    }
+
+    .danger {
+      background: #f6e5e2;
+      color: #8a4e48;
+    }
+
+    .task {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #eeeae4;
+    }
+
+    .task:last-child {
+      border-bottom: 0;
+    }
+
+    .task input {
+      width: 24px;
+      height: 24px;
+      accent-color: var(--green);
+      flex: 0 0 auto;
+      margin-top: 1px;
+    }
+
+    .task label {
+      line-height: 1.35;
+      font-size: 16px;
+      flex: 1;
+    }
+
+    .task.done label {
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0 0 10px 0;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .stat {
+      background: var(--green-soft);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .history-item {
+      padding: 10px 0;
+      border-bottom: 1px solid #eeeae4;
+      font-size: 14px;
+    }
+
+    .history-item:last-child {
+      border-bottom: 0;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 8px 0 20px;
+    }
+
+    @media (max-width: 480px) {
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .title {
+        font-size: 24px;
+      }
