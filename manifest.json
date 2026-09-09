@@ -1,4 +1,4 @@
-```json
+
 {
   "name": "Casa Boretto",
   "short_name": "Casa Boretto",
@@ -11,15 +11,4 @@
   "lang": "it",
   "orientation": "portrait-primary"
 }
-```
 
-Poi premi *Conferma le modifiche*.
-
-Nella schermata successiva lascia:
-- messaggio di commit: *Create manifest.json*
-- ramo principale selezionato
-- descrizione estesa vuota
-
-e premi di nuovo *Conferma le modifiche*.
-
-Quando torni al repository e vedi `manifest.json` insieme a `index.html`, mandami lo screenshot e facciamo il file *`sw.js`*.
