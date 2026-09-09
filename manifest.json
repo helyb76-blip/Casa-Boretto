@@ -1,0 +1,25 @@
+```json
+{
+  "name": "Casa Boretto",
+  "short_name": "Casa Boretto",
+  "description": "Routine e checklist personalizzate per le pulizie di Casa Boretto",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f3ee",
+  "theme_color": "#8aa88a",
+  "lang": "it",
+  "orientation": "portrait-primary"
+}
+```
+
+Poi premi *Conferma le modifiche*.
+
+Nella schermata successiva lascia:
+- messaggio di commit: *Create manifest.json*
+- ramo principale selezionato
+- descrizione estesa vuota
+
+e premi di nuovo *Conferma le modifiche*.
+
+Quando torni al repository e vedi `manifest.json` insieme a `index.html`, mandami lo screenshot e facciamo il file *`sw.js`*.
