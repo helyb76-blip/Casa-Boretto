@@ -487,6 +487,314 @@
     navigator.serviceWorker.register('./sw.js');
   }
 </script>
+<!-- ===== CASALINDA - MENU PULIZIE ZONE ===== -->
+
+<style>
+  #clMenuButton {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 14px;
+    background: white;
+    font-size: 27px;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,.18);
+    z-index: 10001;
+  }
+
+  #clMenuOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.30);
+    z-index: 10002;
+  }
+
+  #clMenuPanel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(90%, 390px);
+    height: 100%;
+    overflow-y: auto;
+    background: #fffdf8;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: -5px 0 20px rgba(0,0,0,.18);
+  }
+
+  .clMenuHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .clMenuHeader h2 {
+    margin: 0;
+  }
+
+  .clCloseButton,
+  .clBackButton {
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    cursor: pointer;
+  }
+
+  .clMenuItem {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,.10);
+    font-size: 18px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  #clZonePage {
+    display: none;
+  }
+
+  .clZoneIntro {
+    margin-bottom: 18px;
+    color: #555;
+    line-height: 1.4;
+  }
+
+  .clDayCard {
+    background: white;
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  }
+
+  .clMonday {
+    border: 2px solid #f0c94b;
+  }
+
+  .clDayTitle {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .clDaySub {
+    margin-top: 5px;
+    color: #666;
+    font-size: 14px;
+  }
+
+  .clZoneProgress {
+    margin: 13px 0;
+    padding: 9px 12px;
+    border-radius: 10px;
+    background: #fff5c7;
+    font-weight: 600;
+  }
+
+  .clDeepTask {
+    display: flex;
+    gap: 10px;
+    padding: 11px 0;
+    border-top: 1px solid #eee;
+  }
+
+  .clDeepTask input {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+
+  .clTaskText {
+    flex: 1;
+  }
+
+  .clTaskTime {
+    display: block;
+    margin-top: 3px;
+    color: #777;
+    font-size: 13px;
+  }
+</style>
+
+<button id="clMenuButton" aria-label="Apri menu">☰</button>
+
+<div id="clMenuOverlay">
+  <div id="clMenuPanel">
+
+    <div id="clMainMenu">
+      <div class="clMenuHeader">
+        <h2>CasaLinda</h2>
+        <button class="clCloseButton" onclick="clCloseMenu()">×</button>
+      </div>
+
+      <button class="clMenuItem" onclick="clOpenZones()">
+        🧹 Pulizie Zone
+      </button>
+    </div>
+
+    <div id="clZonePage">
+
+      <div class="clMenuHeader">
+        <button class="clBackButton" onclick="clBackMenu()">←</button>
+        <h2>Pulizie Zone</h2>
+        <button class="clCloseButton" onclick="clCloseMenu()">×</button>
+      </div>
+
+      <p class="clZoneIntro">
+        Una zona al giorno • massimo 3 lavori profondi • circa 30–45 minuti.
+      </p>
+
+      <div class="clDayCard clMonday">
+
+        <div class="clDayTitle">
+          🍳 Lunedì — Cucina + Dispensa
+        </div>
+
+        <div class="clDaySub">
+          Pulizia profonda della settimana
+        </div>
+
+        <div class="clZoneProgress">
+          <span id="clMondayCount">0/3</span> completate • circa 40 min
+        </div>
+
+        <label class="clDeepTask">
+          <input type="checkbox" class="clMondayTask" data-task="ante">
+          <span class="clTaskText">
+            Pulire ante, maniglie e punti unti dei mobili
+            <span class="clTaskTime">⏱ 12 minuti</span>
+          </span>
+        </label>
+
+        <label class="clDeepTask">
+          <input type="checkbox" class="clMondayTask" data-task="fornelli">
+          <span class="clTaskText">
+            Piano cottura, paraschizzi e zone difficili intorno ai fornelli
+            <span class="clTaskTime">⏱ 12 minuti</span>
+          </span>
+        </label>
+
+        <label class="clDeepTask">
+          <input type="checkbox" class="clMondayTask" data-task="dispensa">
+          <span class="clTaskText">
+            Dispensa: scadenze, FIFO, ripiani sporchi e prodotti fuori posto
+            <span class="clTaskTime">⏱ 15 minuti</span>
+          </span>
+        </label>
+
+      </div>
+
+      <div class="clDayCard">
+        <div class="clDayTitle">🛋️ Martedì — Soggiorno / Piano terra</div>
+        <div class="clDaySub">3 lavori profondi • 30–45 min</div>
+      </div>
+
+      <div class="clDayCard">
+        <div class="clDayTitle">🛏️ Mercoledì — Camera matrimoniale + Studio</div>
+        <div class="clDaySub">3 lavori profondi • 30–45 min</div>
+      </div>
+
+      <div class="clDayCard">
+        <div class="clDayTitle">🧸 Giovedì — Cameretta Alessandro + Bagno</div>
+        <div class="clDaySub">3 lavori profondi • 30–45 min</div>
+      </div>
+
+      <div class="clDayCard">
+        <div class="clDayTitle">🏠 Venerdì — Mansarda Denise + Bagno</div>
+        <div class="clDaySub">3 lavori profondi • 30–45 min</div>
+      </div>
+
+      <div class="clDayCard">
+        <div class="clDayTitle">🔄 Sabato — Recupero / Extra</div>
+        <div class="clDaySub">Solo se è rimasto qualcosa indietro</div>
+      </div>
+
+      <div class="clDayCard">
+        <div class="clDayTitle">✅ Domenica — Mantenimento</div>
+        <div class="clDaySub">Nessuna pulizia profonda programmata</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  const menuButton = document.getElementById("clMenuButton");
+  const overlay = document.getElementById("clMenuOverlay");
+
+  menuButton.addEventListener("click", function () {
+    document.getElementById("clMainMenu").style.display = "block";
+    document.getElementById("clZonePage").style.display = "none";
+    overlay.style.display = "block";
+  });
+
+  window.clCloseMenu = function () {
+    overlay.style.display = "none";
+  };
+
+  window.clOpenZones = function () {
+    document.getElementById("clMainMenu").style.display = "none";
+    document.getElementById("clZonePage").style.display = "block";
+  };
+
+  window.clBackMenu = function () {
+    document.getElementById("clZonePage").style.display = "none";
+    document.getElementById("clMainMenu").style.display = "block";
+  };
+
+  overlay.addEventListener("click", function (event) {
+    if (event.target === overlay) {
+      clCloseMenu();
+    }
+  });
+
+  const mondayTasks = document.querySelectorAll(".clMondayTask");
+
+  mondayTasks.forEach(function (task) {
+
+    const key = "casalinda_zone_monday_" + task.dataset.task;
+
+    task.checked = localStorage.getItem(key) === "true";
+
+    task.addEventListener("change", function () {
+
+      localStorage.setItem(key, task.checked);
+
+      clUpdateMondayCount();
+    });
+
+  });
+
+  function clUpdateMondayCount() {
+
+    let completed = 0;
+
+    mondayTasks.forEach(function (task) {
+      if (task.checked) completed++;
+    });
+
+    document.getElementById("clMondayCount").textContent =
+      completed + "/3";
+  }
+
+  clUpdateMondayCount();
+
+})();
+</script>
+
+<!-- ===== FINE MENU PULIZIE ZONE ===== -->
 
 </body>
 </html>
+
+
